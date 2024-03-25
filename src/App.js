@@ -3,19 +3,26 @@ import { Col } from "antd";
 import { Searcher } from './Components/Searcher';
 import PokemonList from './Components/PokemonList';
 import logo from './Statics/logo.svg'
-import { useEffect, useState } from 'react';
-import { setPokemons as setPokemonsActions } from './actions'
+// import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+// import { setPokemons as setPokemonsActions } from './actions'
+import { setPokemons } from './actions'
 import { getPokemon } from './api';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+// import { connect } from 'react-redux';
 
-function App({ Pokemons, setPokemons }) {
-  console.log(Pokemons);
+// function App({ Pokemons, setPokemons }) {
+function App() {
   // const [Pokemons, setPokemons] = useState([]);
 
+  const Pokemons = useSelector(state => state.pokemons);
+  const dispatch = useDispatch();
+
+  console.log(Pokemons);
   useEffect(() => {
     const fetchPokemons = async () => {
       const Pokemons = await getPokemon();
-      setPokemons(Pokemons);
+      dispatch(setPokemons(Pokemons));
     }
     fetchPokemons();
   }, [])
@@ -33,11 +40,12 @@ function App({ Pokemons, setPokemons }) {
   );
 }
 
-const mapStateToProps = state => ({ Pokemons: state.pokemons })  // Funcion que recibe el estado y retorna un objeto cuyas propiedades van a ser enviadas a los props del componente que se esta conectando a Redux 
+// const mapStateToProps = state => ({ Pokemons: state.pokemons })  // Funcion que recibe el estado y retorna un objeto cuyas propiedades van a ser enviadas a los props del componente que se esta conectando a Redux 
 
 
-const mapDispatchToProps = (dispatch) => ({ // Recibe el dispatcher de Redux y retorna un objeto con los actions creator que nosotros establecimos
-  setPokemons: (value) => dispatch(setPokemonsActions(value))
-});
+// const mapDispatchToProps = (dispatch) => ({ // Recibe el dispatcher de Redux y retorna un objeto con los actions creator que nosotros establecimos
+//   setPokemons: (value) => dispatch(setPokemonsActions(value))
+// });
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+// export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;
