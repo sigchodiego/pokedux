@@ -6,7 +6,7 @@ import logo from './Statics/logo.svg'
 // import { useEffect, useState } from 'react';
 import { useEffect } from 'react';
 // import { setPokemons as setPokemonsActions } from './actions'
-import { setPokemons } from './actions'
+import { getPokemonsWithDetails, setPokemons } from './actions'
 import { getPokemon, getPokemonDetails } from './api';
 import { useDispatch, useSelector } from 'react-redux';
 // import { connect } from 'react-redux';
@@ -22,9 +22,10 @@ function App() {
   useEffect(() => {
     const fetchPokemons = async () => {
       const Pokemons = await getPokemon();
-      const pokemonsDetailed = await Promise.all(Pokemons.map(pokemon => getPokemonDetails(pokemon)))
+      // const pokemonsDetailed = await Promise.all(Pokemons.map(pokemon => getPokemonDetails(pokemon)))
       // dispatch(setPokemons(Pokemons));
-      dispatch(setPokemons(pokemonsDetailed));
+      // dispatch(setPokemons(pokemonsDetailed));
+      dispatch(getPokemonsWithDetails(Pokemons));
     }
     fetchPokemons();
   }, [])
